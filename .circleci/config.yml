@@ -9,7 +9,7 @@ jobs:
   build:
     docker:
       # circleciでbuildするときにイメージを指定
-      - image: circleci/ruby:2.7
+      - image: cimg/ruby:2.7.5
     # githubのリポジトリ名/src
     working_directory: ~/kthr01/src
     # 実際にやるjobの中身
@@ -17,14 +17,14 @@ jobs:
       # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピーする
       - checkout:
           path: ~/kthr01
-      # orbsを使うことで、このような記述ができる。bundleinstallなどを実行
+      # orbsを使うことで、このような記述ができる。bundle installなどを実行
       - ruby/install-deps
 
   test:
     # circleciの実行環境
     docker:
       # テストを実行するのにアプリケーション側(今回はruby)とDBのイメージが必要
-      - image: circleci/ruby:2.7
+      - image: cimg/ruby:2.7.5
       - image: circleci/mysql:5.5
         # DBの環境変数を設定
         # src/config/database.ymlに合わせる
@@ -42,10 +42,10 @@ jobs:
     working_directory: ~/kthr01/src
     # 実際に実行することを定義
     steps:
-      # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピーする
+      # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピー
       - checkout:
           path: ~/kthr01
-      # orbsを使うことで、このような記述ができる。bundleinstallなどを実行
+      # orbsを使うことで、このような記述ができる。bundle installなどを実行
       - ruby/install-deps
       # migrateを実行
       - run:
