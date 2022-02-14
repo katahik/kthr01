@@ -1,0 +1,71 @@
+# バージョンを宣言
+version: 2.1
+# 下で定義するjobをシェアする仕組みがorb
+orbs:
+  ruby: circleci/ruby@1.1.2
+
+# circleciに行わせたいこと(job)を書く
+jobs:
+  build:
+    docker:
+      # circleciでbuildするときにイメージを指定
+      - image: circleci/ruby:2.7
+    # githubのリポジトリ名/src
+    working_directory: ~/kthr01/src
+    # 実際にやるjobの中身
+    steps:
+      # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピーする
+      - checkout:
+          path: ~/kthr01
+      # orbsを使うことで、このような記述ができる。bundleinstallなどを実行
+      - ruby/install-deps
+
+  test:
+    # circleciの実行環境
+    docker:
+      # テストを実行するのにアプリケーション側(今回はruby)とDBのイメージが必要
+      - image: circleci/ruby:2.7
+      - image: circleci/mysql:5.5
+        # DBの環境変数を設定
+        # src/config/database.ymlに合わせる
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: app_test
+          MYSQL_USER: root
+    # testジョブ全体の環境変数を設定
+    environment:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
+      APP_DATABASE_HOST: "127.0.0.1"
+      RAILS_ENV: test
+    # このあとのコマンド操作をするディレクトリを指定
+    working_directory: ~/kthr01/src
+    # 実際に実行することを定義
+    steps:
+      # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピーする
+      - checkout:
+          path: ~/kthr01
+      # orbsを使うことで、このような記述ができる。bundleinstallなどを実行
+      - ruby/install-deps
+      # migrateを実行
+      - run:
+          name: Database setup
+          command: bundle exec rails db:migrate
+      # testを実行
+      - run:
+          name: test
+          command: bundle exec rake test
+
+# circleciに行わせたいこと（ワークフロー）を書く
+workflows:
+  # バージョン指定
+  version: 2
+  # build_and_testという名前のワークフローを作る
+  build_and_test:
+    # その中のjobsとして、buildを行って,testを行う
+    jobs:
+      - build
+      - test:
+          # testを行うためには,buildを行う
+          requires:
+            - build
