@@ -9,7 +9,7 @@ jobs:
   build:
     docker:
       # circleciでbuildするときにイメージを指定
-      - image: circleci/ruby:2.7
+      - image: cimg/ruby:2.7.5
     # githubのリポジトリ名/src
     working_directory: ~/kthr01/src
     # 実際に行うjobの中身
@@ -24,7 +24,7 @@ jobs:
     # circleciの実行環境
     docker:
       # テストを実行するのにアプリケーション側(今回はruby)とDBのイメージが必要
-      - image: circleci/ruby:2.7
+      - image: cimg/ruby:2.7.5
       - image: circleci/mysql:5.5
         # DBの環境変数を設定
         # src/config/database.ymlに合わせる
