@@ -25,7 +25,7 @@ jobs:
     docker:
       # テストを実行するのにアプリケーション側(今回はruby)とDBのイメージが必要
       - image: cimg/ruby:2.7.5
-      - image: cimg/mysql:5.5
+      - image: circleci/mysql:5.5
         # DBの環境変数を設定
         # src/config/database.ymlに合わせる
         environment:
