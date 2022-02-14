@@ -12,7 +12,7 @@ jobs:
       - image: circleci/ruby:2.7
     # githubのリポジトリ名/src
     working_directory: ~/kthr01/src
-    # 実際にやるjobの中身
+    # 実際に行うjobの中身
     steps:
       # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピーする
       - checkout:
