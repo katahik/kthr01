@@ -42,7 +42,7 @@ jobs:
     working_directory: ~/kthr01/src
     # 実際に実行することを定義
     steps:
-      # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピーする
+      # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピー
       - checkout:
           path: ~/kthr01
       # orbsを使うことで、このような記述ができる。bundleinstallなどを実行
