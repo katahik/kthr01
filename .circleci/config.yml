@@ -45,7 +45,7 @@ jobs:
       # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピー
       - checkout:
           path: ~/kthr01
-      # orbsを使うことで、このような記述ができる。bundleinstallなどを実行
+      # orbsを使うことで、このような記述ができる。bundle installなどを実行
       - ruby/install-deps
       # migrateを実行
       - run:
