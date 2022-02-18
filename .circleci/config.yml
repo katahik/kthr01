@@ -58,16 +58,11 @@ jobs:
           command: bundle exec rubocop
 
 
-# circleciに行わせたいこと（ワークフロー）を書く
 workflows:
-  # バージョン指定
   version: 2
-  # build_and_testという名前のワークフローを作る
   build_and_test:
-    # その中のjobsとして、buildを行って,testを行う
     jobs:
       - build
       - test:
-          # testを行うためには,buildを行う
           requires:
             - build
