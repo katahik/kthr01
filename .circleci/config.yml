@@ -7,21 +7,18 @@ jobs:
     docker:
       - image: cimg/ruby:2.7.5
     working_directory: ~/kthr01/src
-    # 実際にやるjobの中身
     steps:
       # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピーする
       - checkout:
           path: ~/kthr01
-      # orbsを使うことで、このような記述ができる。bundle installなどを実行
+      # bundle installなどを実行
       - ruby/install-deps
 
   test:
-    # circleciの実行環境
     docker:
       - image: cimg/ruby:2.7.5
       - image: circleci/mysql:5.5
-        # DBの環境変数を設定
-        # src/config/database.ymlに合わせる
+        # DBの環境変数を設定(database.ym)
         environment:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: app_test
@@ -35,7 +32,6 @@ jobs:
     # このあとのコマンド操作をするディレクトリを指定
     working_directory: ~/kthr01/src
     steps:
-      # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピー
       - checkout:
           path: ~/kthr01
       # bundle installなどを実行
