@@ -17,12 +17,12 @@ jobs:
   test:
     docker:
       - image: cimg/ruby:2.7.5
-      - image: circleci/mysql:5.5
+      - image: circleci/mysql:8.0
+        command: [--default-authentication-plugin=mysql_native_password]
         # DBの環境変数を設定(database.ym)
         environment:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: app_test
-          MYSQL_USER: root
     # testジョブ全体の環境変数を設定
     environment:
       BUNDLE_JOBS: "3"
@@ -36,6 +36,11 @@ jobs:
           path: ~/kthr01
       # bundle installなどを実行
       - ruby/install-deps
+
+      # mysqlが準備ができるまで待機し、その後処理(mysql起動後にmigrateを実行するため)
+      - run:
+          name: Waiting for MySQL to be ready
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
       # migrateを実行
       - run:
           name: Database setup
