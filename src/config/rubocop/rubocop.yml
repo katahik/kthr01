@@ -1,0 +1,85 @@
+AllCops:
+  Exclude:
+    - "node_modules/**/*" # rubocop config/default.yml
+    - "vendor/**/*" # rubocop config/default.yml
+    - "Gemfile"
+    - "bin/*"
+    - "db/**/*"
+    - "config/**/*"
+
+
+#################### Layout(プログラムの書式についてのCop) ################################
+
+# メソッドチェーンの改行は末尾に . を入れる
+# * REPL に貼り付けた際の暴発を防ぐため
+# * 途中にコメントをはさむことができて実用上圧倒的に便利
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+#################### Metrics(クラスの行数や1行の文字数などに関してのCop) ###############################
+
+# 代入少なく、関数呼び出し少なく、制御構文少なく
+Metrics/AbcSize:
+  Max: 24
+
+# 1 つのブロックあたりの行数(デフォルト25行以下)
+Metrics/BlockLength:
+  Exclude:
+    - "Rakefile"
+    - "**/*.rake"
+    - "Guardfile"
+
+# 循環的複雑度
+# コード内にある if, while, until, for, rescue, when, and, or を1つとカウントし、それらの合計が複雑度
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+# メソッドの行数
+Metrics/MethodLength:
+  Max: 20
+
+# メソッドの複数さを数値化したものを計算しチェック
+Metrics/PerceivedComplexity:
+  Max: 10
+
+# 一行の文字数
+Metrics/LineLength:
+  Max: 160
+
+#################### Style(スタイルについてのCop)#################################
+
+# 日本語のコメントを許可する
+Style/AsciiComments:
+  Enabled: false
+
+# ファイルにfrozen_string_literal: trueを指定しているかの確認
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# %w() と %i() が見分けづらいので Style/WordArray と合わせて無効に。
+# 書き手に委ねるという意味で、Enabled: false にしています。使っても良い。
+Style/SymbolArray:
+  Enabled: false
+
+# %w() と %i() が見分けづらいので Style/SymbolArray と合わせて無効に。
+# 書き手に委ねるという意味で、Enabled: false にしています。使っても良い。
+Style/WordArray:
+  Enabled: false
+
+# ドキュメントの無い public class を許可する
+Style/Documentation:
+  Enabled: false
+
+# 1行で書くべき(LineLengthで判断) if/unless に対して警告を出す。
+# 条件式の方を意識させたい場合には後置の if/unless を使わない方が分かりやすいためfalse
+Style/IfUnlessModifier:
+  Enabled: false
+
+# 空メソッドの場合1行に変換される
+# 空メソッドの場合だけ1行で書かなければいけない理由が無い、また、「セミコロンは使わない」に寄せた方がルールがシンプル
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+# クラス内のクラスなどを定義する際の形式を強制
+Style/ClassAndModuleChildren:
+  Enabled: false

@@ -1,33 +1,24 @@
-# バージョンを宣言
 version: 2.1
-# 下で定義するjobをシェアする仕組みがorb
 orbs:
   ruby: circleci/ruby@1.1.2
 
-# circleciに行わせたいこと(job)を書く
 jobs:
   build:
     docker:
-      # circleciでbuildするときにイメージを指定
       - image: cimg/ruby:2.7.5
-    # githubのリポジトリ名/src
     working_directory: ~/kthr01/src
-    # 実際にやるjobの中身
     steps:
-      # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピーする
+      # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピー
       - checkout:
           path: ~/kthr01
-      # orbsを使うことで、このような記述ができる。bundle installなどを実行
+      # bundle installなどを実行
       - ruby/install-deps
 
   test:
-    # circleciの実行環境
     docker:
-      # テストを実行するのにアプリケーション側(今回はruby)とDBのイメージが必要
       - image: cimg/ruby:2.7.5
       - image: circleci/mysql:5.5
-        # DBの環境変数を設定
-        # src/config/database.ymlに合わせる
+        # DBの環境変数を設定(database.ym)
         environment:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: app_test
@@ -40,32 +31,34 @@ jobs:
       RAILS_ENV: test
     # このあとのコマンド操作をするディレクトリを指定
     working_directory: ~/kthr01/src
-    # 実際に実行することを定義
     steps:
-      # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピー
       - checkout:
           path: ~/kthr01
-      # orbsを使うことで、このような記述ができる。bundle installなどを実行
+      # bundle installなどを実行
       - ruby/install-deps
       # migrateを実行
       - run:
           name: Database setup
           command: bundle exec rails db:migrate
-      # testを実行
+      # test
       - run:
           name: test
           command: bundle exec rake test
+      # brakeman
+      - run:
+          name: run brakeman
+          command: bundle exec brakeman -A -w1
+      # rubocop
+      - run:
+          name: run rubocop
+          command: bundle exec rubocop
 
-# circleciに行わせたいこと（ワークフロー）を書く
+
 workflows:
-  # バージョン指定
   version: 2
-  # build_and_testという名前のワークフローを作る
   build_and_test:
-    # その中のjobsとして、buildを行って,testを行う
     jobs:
       - build
       - test:
-          # testを行うためには,buildを行う
           requires:
             - build
