@@ -10,7 +10,7 @@ jobs:
     steps:
       # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピー
       - checkout:
-#          path: ~/kthr01
+          path: ~/kthr01
       # bundle installなどを実行
       - ruby/install-deps
 
@@ -33,7 +33,7 @@ jobs:
     working_directory: ~/kthr01/src
     steps:
       - checkout:
-#          path: ~/kthr01
+          path: ~/kthr01
       # bundle installなどを実行
       - ruby/install-deps
       # migrateを実行
