@@ -8,7 +8,7 @@ jobs:
       - image: cimg/ruby:2.7.5
     working_directory: ~/kthr01/src
     steps:
-      # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピーする
+      # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピー
       - checkout:
           path: ~/kthr01
       # bundle installなどを実行
