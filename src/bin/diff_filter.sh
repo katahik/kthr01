@@ -20,10 +20,10 @@ echo `git --no-pager diff --diff-filter=ACMR $BASE_REMOTE/$BASE_BRANCH...HEAD --
 # web/config/database.ymlだったらwebをとって下記でアクセスできる
 # /config/database.yml
 for f in `git --no-pager diff --diff-filter=ACMR $BASE_REMOTE/$BASE_BRANCH...HEAD --name-only`; do
-
   for c in $commit_list; do
     diffs=`cd .. && git --no-pager blame --show-name -s $f | grep $c | sed -e "s/^[^ ]* *\([^ ]*\) *\([0-9]*\)*).*$/\1:\2/"`
 #    diffs=`git --no-pager blame --show-name -s $f | grep $c | sed -e "s/^[^ ]* *\([^ ]*\) *\([0-9]*\)*).*$/\1:\2/"`
+    echo "$diffs"
     echo $diffs
     for ln in $diffs; do
       diff_list+=( $ln )
