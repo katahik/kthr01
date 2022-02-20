@@ -54,9 +54,12 @@ jobs:
           name: run brakeman
           command: bundle exec brakeman -A -w1
       # rubocop
+      # - run:
+      #     name: run rubocop
+      #     command: bundle exec rubocop
       - run:
-          name: run rubocop
-          command: bundle exec rubocop
+          name: Run Rubocop
+          command: bundle exec rubocop | bash bin/diff_filter.sh
 
 
 workflows:
