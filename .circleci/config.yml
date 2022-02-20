@@ -8,8 +8,11 @@ jobs:
       - image: cimg/ruby:2.7.5
     working_directory: ~/kthr01/
     steps:
+      - run: pwd
+      - run: ls
       # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピー
-      - checkout
+      - checkout:
+          path: ~/kthr01
       - run: pwd
       - run: ls
       #          path: ~/kthr01
