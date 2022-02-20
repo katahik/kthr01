@@ -6,13 +6,16 @@ jobs:
   build:
     docker:
       - image: cimg/ruby:2.7.5
-    working_directory: ~/kthr01/src
+    working_directory: ~/kthr01
     steps:
       # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピー
       - checkout:
-          path: ~/kthr01
+      - run: pwd
+      - run: ls
+      #          path: ~/kthr01
       # bundle installなどを実行
       - ruby/install-deps
+
 
   test:
     docker:
