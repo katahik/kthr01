@@ -9,7 +9,7 @@ jobs:
     working_directory: ~/kthr01
     steps:
       # ~/kthr01(githubのリポジトリ名)にgitリポジトリをコピー
-      - checkout:
+      - checkout
       - run: pwd
       - run: ls
       #          path: ~/kthr01
