@@ -23,6 +23,8 @@ jobs:
       - ruby/install-deps
 
   test:
+    executor: # name で使いたい executor を指定する
+      name: default
     docker:
       - image: circleci/mysql:8.0
         command: [ --default-authentication-plugin=mysql_native_password ]
@@ -30,8 +32,6 @@ jobs:
         environment:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: app_test
-    executor: # name で使いたい executor を指定する
-      name: default
     # testジョブ全体の環境変数を設定
     environment:
       BUNDLE_JOBS: "3"
@@ -39,6 +39,7 @@ jobs:
       APP_DATABASE_HOST: "127.0.0.1"
       RAILS_ENV: test
     steps:
+      # ~/kthr01(githubのリポジトリ名)にgitリポジトリ(プロジェクト)をコピー(展開)
       - checkout:
           path: ~/kthr01
       # bundle installなどを実行
