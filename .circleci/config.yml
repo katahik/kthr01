@@ -2,11 +2,19 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@1.1.2
 
-jobs:
-  build:
+# executorを使って実行環境の情報を定義して再利用する
+executors:
+  # ここに好きな名前で executorを定義できる
+  default:
+    # このあとのコマンド操作をするディレクトリを指定(CircleCI内のプロジェクト)
+    working_directory: ~/kthr01/src
     docker:
       - image: cimg/ruby:2.7.5
-    working_directory: ~/kthr01/src
+
+jobs:
+  build:
+    executor: # nameで使いたいexecutorを指定する
+      name: default
     steps:
       # ~/kthr01(githubのリポジトリ名)にgitリポジトリ(プロジェクト)をコピー(展開)
       - checkout:
@@ -15,10 +23,11 @@ jobs:
       - ruby/install-deps
 
   test:
+    working_directory: ~/kthr01/src
     docker:
       - image: cimg/ruby:2.7.5
       - image: circleci/mysql:8.0
-        command: [--default-authentication-plugin=mysql_native_password]
+        command: [ --default-authentication-plugin=mysql_native_password ]
         # DBの環境変数を設定(database.ym)
         environment:
           MYSQL_ROOT_PASSWORD: password
@@ -29,9 +38,8 @@ jobs:
       BUNDLE_RETRY: "3"
       APP_DATABASE_HOST: "127.0.0.1"
       RAILS_ENV: test
-    # このあとのコマンド操作をするディレクトリを指定
-    working_directory: ~/kthr01/src
     steps:
+      # ~/kthr01(githubのリポジトリ名)にgitリポジトリ(プロジェクト)をコピー(展開)
       - checkout:
           path: ~/kthr01
       # bundle installなどを実行
@@ -58,6 +66,22 @@ jobs:
           name: Run rubocop
           command: bundle exec rubocop
 
+    # EC2にSSH接続し、デプロイを実行
+  deploy:
+    executor: # nameで使いたいexecutorを指定する
+      name: default
+    steps:
+      - checkout
+      # CircleCI に登録した秘密鍵を呼び出す
+      - add_ssh_keys:
+          fingerprints:
+              - "40:8e:0f:c9:3a:db:41:57:af:33:57:76:88:3e:f0:25"
+      # CircleCI に登録した環境変数を使ってSSH接続
+      - run:
+          name: deploy
+          command: echo 'deploy'
+#          command: ssh -o 'StrictHostKeyChecking no' ${USER_NAME}@${HOST_NAME} '/home/ec2-user/release.sh'
+
 
 workflows:
   version: 2
@@ -67,3 +91,10 @@ workflows:
       - test:
           requires:
             - build
+      - deploy:
+          requires:
+            - test
+          # mainブランチがpushされた場合のみdeployするようにする。
+          filters:
+            branches:
+              only: feature/main
