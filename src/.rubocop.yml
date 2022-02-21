@@ -1,9 +1,10 @@
-require:
-  - rubocop-rails
-
 inherit_from:
+  - ./.rubocop_todo.yml
   - config/rubocop/rubocop.yml
   - config/rubocop/rails.yml
+
+require:
+  - rubocop-rails
 
 AllCops:
   TargetRubyVersion: 2.7.5
