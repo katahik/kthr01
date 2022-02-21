@@ -75,6 +75,8 @@ jobs:
           path: ~/kthr01
       # CircleCI に登録した秘密鍵を呼び出す
       - add_ssh_keys:
+          fingerprints:
+            - 40:8e:0f:c9:3a:db:41:57:af:33:57:76:88:3e:f0:25
       # CircleCI に登録した環境変数を使ってSSH接続
       - run:
           name: deploy
