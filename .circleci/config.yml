@@ -55,8 +55,8 @@ jobs:
           command: bundle exec brakeman -A -w1
       # rubocop
        - run:
-           name: Run rubocop
-           command: bundle exec rubocop
+          name: Run rubocop
+          command: bundle exec rubocop
 
 
 workflows:
