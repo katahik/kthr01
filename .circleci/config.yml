@@ -47,20 +47,16 @@ jobs:
           command: bundle exec rails db:migrate
       # test
       - run:
-          name: test
+          name: Run test
           command: bundle exec rake test
       # brakeman
       - run:
-          name: run brakeman
+          name: Run brakeman
           command: bundle exec brakeman -A -w1
       # rubocop
-      # - run:
-      #     name: run rubocop
-      #     command: bundle exec rubocop
       - run:
-          name: Run Rubocop
-          command: bundle exec rubocop | bash bin/diff_filter.sh
-
+          name: Run rubocop
+          command: bundle exec rubocop
 
 
 workflows:
