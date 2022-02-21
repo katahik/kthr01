@@ -2,19 +2,12 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@1.1.2
 
-jobs:
-  build:
-    docker:
-      - image: cimg/ruby:2.7.5
+# executorを使って実行環境の情報を定義して再利用する
+executors:
+  # ここに好きな名前で executor を定義できる
+  default:
+    # このあとのコマンド操作をするディレクトリを指定(CircleCI内のプロジェクト)
     working_directory: ~/kthr01/src
-    steps:
-      # ~/kthr01(githubのリポジトリ名)にgitリポジトリ(プロジェクト)をコピー(展開)
-      - checkout:
-          path: ~/kthr01
-      # bundle installなどを実行
-      - ruby/install-deps
-
-  test:
     docker:
       - image: cimg/ruby:2.7.5
       - image: circleci/mysql:8.0
@@ -23,14 +16,27 @@ jobs:
         environment:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: app_test
+
+jobs:
+  build:
+    executor: # name で使いたい executor を指定する
+      name: default
+    steps:
+      # ~/kthr01(githubのリポジトリ名)にgitリポジトリ(プロジェクト)をコピー(展開)
+      - checkout:
+          path: ~/kthr01
+      # bundle installなどを実行
+      - ruby/install-deps
+
+  test:
+    executor: # name で使いたい executor を指定する
+      name: default
     # testジョブ全体の環境変数を設定
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
       APP_DATABASE_HOST: "127.0.0.1"
       RAILS_ENV: test
-    # このあとのコマンド操作をするディレクトリを指定
-    working_directory: ~/kthr01/src
     steps:
       - checkout:
           path: ~/kthr01
