@@ -13,7 +13,7 @@ executors:
 
 jobs:
   build:
-    executor: # name で使いたい executor を指定する
+    executor: # nameで使いたいexecutorを指定する
       name: default
     steps:
       # ~/kthr01(githubのリポジトリ名)にgitリポジトリ(プロジェクト)をコピー(展開)
@@ -68,7 +68,7 @@ jobs:
 
     # EC2にSSH接続し、デプロイを実行
   deploy:
-    executor: # name で使いたい executor を指定する
+    executor: # nameで使いたいexecutorを指定する
       name: default
     steps:
       - checkout:
