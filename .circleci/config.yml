@@ -10,6 +10,12 @@ executors:
     working_directory: ~/kthr01/src
     docker:
       - image: cimg/ruby:2.7.5
+      - image: circleci/mysql:8.0
+        command: [ --default-authentication-plugin=mysql_native_password ]
+        # DBの環境変数を設定(database.ym)
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: app_test
 
 jobs:
   build:
@@ -25,13 +31,7 @@ jobs:
   test:
     executor: # name で使いたい executor を指定する
       name: default
-    docker:
-      - image: circleci/mysql:8.0
-        command: [ --default-authentication-plugin=mysql_native_password ]
-        # DBの環境変数を設定(database.ym)
-        environment:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: app_test
+
     # testジョブ全体の環境変数を設定
     environment:
       BUNDLE_JOBS: "3"
