@@ -97,4 +97,4 @@ workflows:
           # mainブランチがpushされた場合のみdeployするようにする。
           filters:
             branches:
-              only: feature/main
+              only: main
