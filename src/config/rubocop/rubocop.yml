@@ -16,6 +16,10 @@ AllCops:
 Layout/DotPosition:
   EnforcedStyle: trailing
 
+# 一行の文字数
+Layout/LineLength:
+  Max: 160
+
 Layout/LineEndStringConcatenationIndentation: # new in 1.18
   Enabled: true
 
@@ -48,9 +52,6 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 10
 
-# 一行の文字数
-Metrics/LineLength:
-  Max: 160
 
 #################### Style(スタイルについてのCop)#################################
 
