@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
   def index
-    pp "test"
+    # pp 'ci_test'
   end
 end
