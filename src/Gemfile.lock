@@ -233,7 +233,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ast (= 2.4.2)
   bootsnap (>= 1.4.4)
   brakeman
   byebug
