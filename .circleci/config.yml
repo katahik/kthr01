@@ -4,7 +4,7 @@ orbs:
 
 # executorを使って実行環境の情報を定義して再利用する
 executors:
-  # ここに好きな名前で executor を定義できる
+  # ここに好きな名前で executorを定義できる
   default:
     # このあとのコマンド操作をするディレクトリを指定(CircleCI内のプロジェクト)
     working_directory: ~/kthr01/src
