@@ -30,6 +30,10 @@ for f in `git --no-pager diff --diff-filter=ACMR $BASE_REMOTE/$BASE_BRANCH...HEA
   done
 done
 
+# 差分一覧
+echo "diff_list"
+echo "${array[*]}"
+
 err_count=0
 while read -r ln; do
   for m in ${diff_list[@]}; do
