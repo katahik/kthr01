@@ -1,8 +1,9 @@
 # ベースのイメージを指定
 FROM ruby:2.7
 
+# TODO:development環境の対応を考えること
 # 環境変数設定
-# ENV RAILS_ENV=production
+ENV RAILS_ENV=production
 
 # 必要なライブラリをインストール(node.jsとyarnをインストール)※JavaScript関連
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
