@@ -15,7 +15,9 @@ services:
       MYSQL_ROOT_PASSWORD: password
   web:
     # いまの直下のdockerfileを参照する
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile_${DOCKER_RAILS_ENV}
     # railsサーバーを起動
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     # src以下とapp以下を同期
