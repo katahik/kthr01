@@ -79,8 +79,7 @@ jobs:
       # CircleCI に登録した環境変数を使ってSSH接続
       - run:
           name: deploy
-          command: echo 'deploy'
-#          command: ssh -o 'StrictHostKeyChecking no' ${USER_NAME}@${HOST_NAME} '/home/ec2-user/release.sh'
+          command: ssh -o 'StrictHostKeyChecking no' ${USER_NAME}@${HOST_NAME} '/home/ec2-user/release.sh'
 
 
 workflows:
