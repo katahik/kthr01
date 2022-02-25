@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+50.times do
+  Product.create!(
+    name: Faker::Movies::BackToTheFuture.character,
+    price: rand(10..200)*1000,
+    vendor: Faker::JapaneseMedia::DragonBall.character
+  )
+end
