@@ -7,10 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-5.times do |i|
+50.times do
   Product.create!(
-    name: "seedにより作成した#{i}",
-    price: i*1000,
-    vendor: i
+    name: Faker::Movies::BackToTheFuture.character,
+    price: rand(10..200)*1000,
+    vendor: Faker::JapaneseMedia::DragonBall.character
   )
 end
