@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-50.times do
+1000.times do
   Product.create!(
     name: Faker::Movies::BackToTheFuture.character,
     price: rand(10..200)*1000,
