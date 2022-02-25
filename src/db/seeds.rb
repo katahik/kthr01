@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+5.times do |i|
+  Product.create!(
+    name: "seedにより作成した#{i}",
+    price: i*1000,
+    vendor: i
+  )
+end
