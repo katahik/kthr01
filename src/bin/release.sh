@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#########################################################
+# ここでgit管理しているが、scpで /home/ec2-user/で持っていくこと
+# scp -i ~/.ssh/kthr01.pem /Users/katahira/dev/kthr01/src/bin/release.sh ec2-user@18.178.252.173:/home/ec2-user/
+#########################################################
+
 ROOT=/home/ec2-user/kthr01/src
 RENV=production
 
@@ -13,6 +18,11 @@ start() {
     echo "=================================================="
     sudo rm -rf /home/ec2-user/kthr01/src/db/mysql_data/
 
+    echo -e "\n\n\n"
+    echo "=================================================="
+    echo "sudo rm /home/ec2-user/kthr01/src/tmp/pids/server.pid"
+    echo "=================================================="
+    sudo rm /home/ec2-user/kthr01/src/tmp/pids/server.pid
 
     echo -e "\n\n\n"
     echo "=================================================="
