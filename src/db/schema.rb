@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2022_02_25_041014) do
 
-  create_table "products", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "products", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
     t.integer "price"
     t.string "vendor"
