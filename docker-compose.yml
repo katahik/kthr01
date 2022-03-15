@@ -10,7 +10,7 @@ services:
     environment:
       # mysqlのパスワードを設定
       MYSQL_ROOT_PASSWORD: password
-  web:
+  app:
     # いまの直下のdockerfileを参照する
     build: .
     # railsサーバーを起動
@@ -24,3 +24,13 @@ services:
     # dbサービス(mysql)とかんたんにつなげるために書いておく
     depends_on:
       - db
+  web:
+    build:
+      context: containers/nginx
+#    volumes:
+#      - ./src/public-data:/webapp/public
+#      - ./src/tmp-data:/webapp/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - app
