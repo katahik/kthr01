@@ -10,11 +10,12 @@ services:
     environment:
       # mysqlのパスワードを設定
       MYSQL_ROOT_PASSWORD: password
-  web:
+  app:
     # いまの直下のdockerfileを参照する
     build: .
     # railsサーバーを起動
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+#    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: bundle exec puma -C config/puma.rb
     # src以下とapp以下を同期
     volumes:
       - ./src:/app
@@ -24,3 +25,13 @@ services:
     # dbサービス(mysql)とかんたんにつなげるために書いておく
     depends_on:
       - db
+  web:
+    build:
+      context: containers/nginx
+    volumes:
+      - ./src/public:/app/public
+      - ./src/tmp:/app/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - app
