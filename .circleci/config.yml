@@ -87,13 +87,13 @@ jobs:
     steps:
       - checkout
       # CircleCI に登録した秘密鍵を呼び出す
-      - add_ssh_keys:
-          fingerprints:
-            - "40:8e:0f:c9:3a:db:41:57:af:33:57:76:88:3e:f0:25"
+#      - add_ssh_keys:
+#          fingerprints:
+#            - "40:8e:0f:c9:3a:db:41:57:af:33:57:76:88:3e:f0:25"
       # CircleCI に登録した環境変数を使ってSSH接続
       - run:
           name: deploy_2
-          command: ssh -o 'StrictHostKeyChecking no' ${USER_NAME}@${HOST_NAME_2} 'cd && ./release.sh renewal'
+          command: ssh -o 'StrictHostKeyChecking no' ${USER_NAME_2}@${HOST_NAME_2} 'cd && ./release.sh renewal'
           no_output_timeout: 30m
 
 workflows:
