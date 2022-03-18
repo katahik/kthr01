@@ -65,8 +65,8 @@ jobs:
           name: Run rubocop
           command: bundle exec rubocop
 
-    # EC2にSSH接続し、デプロイを実行
-  deploy:
+  # EC2にSSH接続し、デプロイを実行
+  deploy_1:
     executor: # nameで使いたいexecutorを指定する
       name: default
     steps:
@@ -77,8 +77,23 @@ jobs:
               - "40:8e:0f:c9:3a:db:41:57:af:33:57:76:88:3e:f0:25"
       # CircleCI に登録した環境変数を使ってSSH接続
       - run:
-          name: deploy
+          name: deploy_1
           command: ssh -o 'StrictHostKeyChecking no' ${USER_NAME}@${HOST_NAME} 'cd && ./release.sh renewal'
+          no_output_timeout: 30m
+  # EC2にSSH接続し、デプロイを実行
+  deploy_2:
+    executor: # nameで使いたいexecutorを指定する
+      name: default
+    steps:
+      - checkout
+      # CircleCI に登録した秘密鍵を呼び出す
+      - add_ssh_keys:
+          fingerprints:
+            - "40:8e:0f:c9:3a:db:41:57:af:33:57:76:88:3e:f0:25"
+      # CircleCI に登録した環境変数を使ってSSH接続
+      - run:
+          name: deploy_2
+          command: ssh -o 'StrictHostKeyChecking no' ${USER_NAME}@${HOST_NAME_2} 'cd && ./release.sh renewal'
           no_output_timeout: 30m
 
 workflows:
@@ -89,10 +104,13 @@ workflows:
       - test:
           requires:
             - build
-      - deploy:
+      - deploy_1:
           requires:
             - test
           # mainブランチがpushされた場合のみdeployするようにする。
           filters:
             branches:
               only: main
+      - deploy_2:
+          requires:
+            - deploy_1
