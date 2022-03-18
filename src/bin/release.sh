@@ -42,7 +42,7 @@ start() {
     echo "=================================================="
     echo "db:migrate starting."
     echo "=================================================="
-    docker-compose run --rm web bundle exec rake db:migrate RAILS_ENV=$RENV
+    docker-compose run --rm app bundle exec rake db:migrate RAILS_ENV=$RENV
 
 
     echo -e "\n\n\n"
