@@ -30,7 +30,6 @@
 # # Workers do not work on JRuby or Windows (both of which do not support
 # # processes).
 # #
-# # workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 #
 # # Use the `preload_app!` method when specifying a `workers` number.
 # # This directive tells Puma to first boot the application and load code
@@ -42,8 +41,11 @@
 # # Allow puma to be restarted by `rails restart` command.
 # plugin :tmp_restart
 
+# ワーカーあたりのスレッド数を指定
 threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }.to_i
 threads threads_count, threads_count
+# ワーカー数を指定
+workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 
 environment ENV.fetch("RAILS_ENV") { "development" }
 plugin :tmp_restart
