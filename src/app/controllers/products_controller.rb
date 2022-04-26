@@ -3,7 +3,30 @@ class ProductsController < ApplicationController
 
   # GET /products or /products.json
   def index
-    @products = Product.all
+    # @products = Product.all
+
+    # 配列の初期化
+    sample_array = []
+    # 変数の初期化
+    input_txt = ''
+
+    # sample_arrayの中に100000個の配列を作成
+    100_000.times do |i|
+      sample_array << i
+    end
+
+    # 配列から一つ一つ取り出して、input_txtに文字列として結合して、入れていく
+    # \nは改行文字を出力するためのエスケープシーケンス
+    # こんな感じ "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n"
+    sample_array.each do |i|
+      input_txt += "#{i}\n"
+    end
+    ## ファイルの作成
+    # ファイルパス + 乱数発生器(16進数)+拡張子,新規書き込み
+    File.open("./app/tmp/#{SecureRandom.hex(8)}.txt", 'w') do |file|
+      # 新規作成したファイルの中身に生成した文字列を格納する
+      file.puts(input_txt)
+    end
   end
 
   # GET /products/1 or /products/1.json

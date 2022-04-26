@@ -1,5 +1,5 @@
 # ベースのイメージを指定
-FROM ruby:2.7
+FROM ruby:2.7.5
 
 # 環境変数設定
 # デフォルトはdevelopmentを指定
