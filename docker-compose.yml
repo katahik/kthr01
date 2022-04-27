@@ -22,11 +22,11 @@ services:
     # ローカル3000ポートとコンテナの3000番ポートをつなげる
     ports:
       - "3000:3000"
-#    environment:
+    environment:
       # ワーカーあたりのスレッド数を指定
-      # RAILS_MAX_THREADS: 16
+       RAILS_MAX_THREADS: 5
       # ワーカー数を指定
-      # WEB_CONCURRENCY: 2
+       WEB_CONCURRENCY: 0
     # dbサービス(mysql)とかんたんにつなげるために書いておく
     depends_on:
       - db
